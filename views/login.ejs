@@ -1,0 +1,18 @@
+<script src="https://cdn.auth0.com/js/lock-8.2.min.js"></script>
+<script type="text/javascript">
+
+  var lock = new Auth0Lock("<%=auth0clientId%>", "<%=auth0domain%>");
+
+  function signin() {
+    const port  = (location.port !== '') ? ':' + location.port : '';
+    lock.show({
+        responseType: 'token',
+        callbackURL: 'http://' + location.hostname + port + '/login/callback',
+        authParams: {
+          scope: 'openid profile'
+        }
+    });
+  }
+
+</script>
+<button onclick="window.signin();">Login</button>

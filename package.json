@@ -1,0 +1,24 @@
+{
+  "name": "auth0-braintree-payment",
+  "version": "1.0.0",
+  "description": "A simple demo app that integrates auth0 and braintree, so that you easiely can get a user to login and pay",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "tags": ["auth0", "braintree", "payment", "authentication"]
+  "author": "Sindre Øye Svendby",
+  "license": "ISC",
+  "dependencies": {
+    "braintree": "^1.35.0",
+    "cookie-parser": "^1.4.1",
+    "ejs": "^2.3.4",
+    "express": "^4.13.3",
+    "express-session": "^1.13.0",
+    "jade": "^1.11.0",
+    "passport": "^0.3.2",
+    "passport-auth0": "^0.5.1",
+    "superagent": "^1.7.2",
+    "superagent-auth-bearer": "0.0.1"
+  }
+}

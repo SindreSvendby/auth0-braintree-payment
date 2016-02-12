@@ -1,0 +1,16 @@
+<h1>Hi <%=user%> </h1>
+
+<p> Pay with card, or with paypal: </p>
+  <form id="checkout" method="post" action="/checkout">
+    <div id="payment-form"></div>
+    <input type="submit" value="Pay $10">
+  </form>
+  <script src="https://js.braintreegateway.com/v2/braintree.js"></script>
+  <script>
+  var clientToken = "<%=clientToken %>";
+  braintree.setup(clientToken, "dropin", {
+    container: "payment-form"
+  });
+  </script>
+
+  <p> <a href="https://" + <%=auth0domain%> \"/v2/logout?returnTo=" + location.href> Log out</a>  </p>
