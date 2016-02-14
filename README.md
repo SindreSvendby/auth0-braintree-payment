@@ -10,7 +10,7 @@ it automatically creates a user in braintree, and redirects you to `/user`.
 
 `/user` - is only accessible for logged in user. Here you get a dropin form from braintree.
 The token passed from the server is "registered" to the user, so you can see which user payed
-in the
+on the braintree website.  
 
 
 
