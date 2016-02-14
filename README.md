@@ -8,7 +8,9 @@ a
 When you click this button a login modal from auth0 is shown. When you login,
 it automatically creates a user in braintree, and redirects you to `/user`.
 
-`/user` - is only accessible for logged in user. Here you get a dropin form from
+`/user` - is only accessible for logged in user. Here you get a dropin form from braintree.
+The token passed from the server is "registered" to the user, so you can see which user payed
+in the
 
 
 
@@ -17,7 +19,7 @@ it automatically creates a user in braintree, and redirects you to `/user`.
 
 You need to create an [auth0 account](https://auth0.com) and a [braintree account](https://braintreepayments.com).
 
-Then you need to set these environment constiables before
+Then you need to set these environment variables before you start the app.
 ```
 BT_MERCHANT_ID="<see braintree website>"
 BT_PUBLIC_KEY="<see braintree website>"
@@ -37,8 +39,11 @@ read:users_app_metadata
 
 for more infomation see [api docs](https://auth0.com/docs/api/v2)
 
+the app can then be started by running `npm start`.
+
+
 The callback is hardcoded to be setup to be `http://localhost:3000/login/callback`.
-So you can verify that it work.
+So you can verify that it work localy.
 
 ### Design
 

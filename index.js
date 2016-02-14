@@ -29,8 +29,10 @@ app.get('/login/failed', (req, res) => {
 });
 
 app.get('/user', requireLogin, (req, res) => {
+  console.log('req.user._json.app_metadata.braintreeId');
+  console.log(req.user._json.app_metadata.braintreeId);
   gateway.clientToken.generate({
-    customerId: req.user.meta_data
+    customerId: req.user._json.app_metadata.braintreeId
   }, (err, response) => {
     if(err) {
       return res.send(':( something wrong has happened. Try again later<br/><br/>Details:<br/>' + JSON.stringify(err));
@@ -70,10 +72,11 @@ app.post("/checkout", (req, res) => {
 
   gateway.transaction.sale({
     amount: '1.00',
+
     paymentMethodNonce: nonce
   }, (err, result) => {
     if(err) {
-      return res.end('Transaction did not go trough, your card was not charged.' + JSON.stringify(err));
+      return res.end('Transaction did not go trough, your card was not charged.' + JSON.stringify(result.errors.deepErrors()));
     }
     res.end('Transaction sucessed')
   });
