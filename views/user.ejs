@@ -3,12 +3,14 @@
 <p> Pay with card, or with paypal: </p>
   <form id="checkout" method="post" action="/checkout">
     <div id="payment-form"></div>
-    <input type="submit" value="Pay $10">
+    <input type="submit" value="Pay $1">
   </form>
   <script src="https://js.braintreegateway.com/v2/braintree.js"></script>
   <script>
-  var clientToken = "<%=clientToken %>";
-  braintree.setup(clientToken, "dropin", {
+  const clientToken = "<%=clientToken %>";
+
+  braintree.setup(clientToken,
+    "dropin", {
     container: "payment-form"
   });
   </script>
