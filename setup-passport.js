@@ -25,12 +25,11 @@ export const strategy = new Auth0Strategy({
           console.log('Did not get userinfo...');
           return done(null, profile);
         }
-        createBrainTreeUser(profile);
-        return done(null, profile);
+        createBrainTreeUser(profile, done);
         })
   });
 
-const createBrainTreeUser = profile => {
+const createBrainTreeUser = (profile, done) => {
   if(!profile._json.app_metadata || !profile._json.app_metadata.braintreeId) {
       const appData = profile.app_metadata || {};
       gateway.customer.create({
@@ -38,31 +37,33 @@ const createBrainTreeUser = profile => {
           lastName: profile.name.familyName,
         }, function (err, result) {
           if(result.success) {
-            return updateAuth0WithCustomerId(profile.id, result.customer.id);
+            return updateAuth0WithCustomerId(profile, result.customer.id, done);
           }
           console.log('Failed creating braintree customer ');
-          console.log(err);
+          done(null, profile);
         });
   } else {
+    done(null, profile);
     console.log('User has a braintreeId ')
   }
 }
 
-const updateAuth0WithCustomerId = (auth0UserId, customerId) => {
+const updateAuth0WithCustomerId = (profile, customerId, done) => {
   superagent
-    .patch(`${auth0ApiUrl}/users/${auth0UserId}`)
+    .patch(`${auth0ApiUrl}/users/${profile.id}`)
     .authBearer(auth0MetaDataToken)
     .send({"app_metadata":{"braintreeId": customerId}})
     .end(function(err, res) {
       if(err) {
         console.log('ERROR in creating braintreeId');
-        return console.log(err);
+        console.log(err);
+        return done(null, profile);
       }
-      console.log(`auth0 user ${auth0UserId} now is connected to braintree user ${customerId}`)
+      console.log(`auth0 user ${profile.id} now is connected to braintree user ${customerId}`)
+      return done(null, profile);
     });
 
 }
-
 
 passport.use(strategy);
 

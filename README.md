@@ -28,6 +28,7 @@ AUTH0_DOMAIN="<see auth0 website>"
 AUTH0_CLIENT_ID="<see auth0 website>"
 AUTH0_SECRET_KEY="<see auth0 website>"
 AUTH0_META_TOKEN="<see auth0 website>"
+SECRET="random-string-uniq-and-secret-for-your-app"
 ```
 
 AUTH0_META_TOKEN is a token for the api with the following premissions (or scope as auth0 calls it):
@@ -56,5 +57,5 @@ this is done trough auth0's website. See more on their website.
 
 
 ### TODO:
- * figure out a way to not hardcode the callback url
- * verify that this work for user created by other providers then facebook.
+ * if the user signsup with the username-password-authentication from auth0 it do provide good infomation to braintree about the user that bought it.
+ You still have a connection userId -> customerId, but it's not human friendly, you need to login to both places to find the link the accounts.

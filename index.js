@@ -13,7 +13,7 @@ import { strategy } from './setup-passport.js';
 
 app.engine('ejs', require('ejs').renderFile);
 app.use(cookieParser());
-app.use(session({ secret: 'gwpionwoiegnwoin', resave: false,  saveUninitialized: false }));
+app.use(session({ secret: process.env.SECRET, resave: false,  saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -72,7 +72,6 @@ app.post("/checkout", (req, res) => {
 
   gateway.transaction.sale({
     amount: '1.00',
-
     paymentMethodNonce: nonce
   }, (err, result) => {
     if(err) {
