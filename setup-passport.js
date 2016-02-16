@@ -35,16 +35,17 @@ const createBrainTreeUser = (profile, done) => {
       gateway.customer.create({
           firstName: profile.name.givenName,
           lastName: profile.name.familyName,
+          email: profile.email
         }, function (err, result) {
           if(result.success) {
             return updateAuth0WithCustomerId(profile, result.customer.id, done);
           }
-          console.log('Failed creating braintree customer ');
-          done(null, profile);
+          console.log('Failed creating braintree customer');
+          return done(null, profile);
         });
   } else {
-    done(null, profile);
     console.log('User has a braintreeId ')
+    done(null, profile);
   }
 }
 

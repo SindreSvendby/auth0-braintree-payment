@@ -28,9 +28,20 @@ app.get('/login/failed', (req, res) => {
   res.end('You must login to view this page')
 });
 
+app.get('/created', (req, res) => {
+  res.cookie('connect.sid','', { maxAge: 1 });
+  res.render('created.ejs');
+});
+
 app.get('/user', requireLogin, (req, res) => {
-  console.log('req.user._json.app_metadata.braintreeId');
-  console.log(req.user._json.app_metadata.braintreeId);
+  if(!req.user._json.app_metadata || !req.user._json.app_metadata.braintreeId) {
+    console.log(req.user._json)
+    // if they have passed the requireLogin function and a valid users but do
+    // not have the braintreeId, this is most likely becasue we just create the user accoutn.
+    // a workaround is to show a "created" message to them, and ask them to login again. 
+    return res.redirect('/created');
+  }
+
   gateway.clientToken.generate({
     customerId: req.user._json.app_metadata.braintreeId
   }, (err, response) => {
